@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html>
+<head>
+<title>登录</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+
+
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+</head>
+<body>
+<div class="main">
+	<div class="w3_login">
+		<div class="w3_login_module">
+			<div class="module form-module">
+				<div class="toggle">
+					<i class="fa fa-times fa-pencil"></i>
+                </div>
+				<div class="form">
+                <div>头像:<input type="file" id="test-image-file" name="test" accept="image/gif, image/jpeg, image/png, image/jpg"></div>
+                <div>姓名:<input type="text" name="uname" placeholder="姓名" id="uname"/></div>
+                <div>账号:</div>
+                <div>邮箱:</div>
+                <div>时间:</div>
+                <div id="gender">性别: <input type="radio" name="1" value="boy">男 <input type="radio" name="1"
+                                                                                  value="girl">女</div>
+                <div>个性图片:<input type="file" id="test-image-file" name="test" accept="image/gif, image/jpeg, image/png,
+                image/jpg"></div>
+                <div id="send" style="width: 320px;background-color: #00dd00;
+						height: 40px;margin: 20px 0;font-size: 20px;
+						font-weight:bold;color: white;cursor:pointer;
+						text-align:center;padding: 0 10px">修改</div>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    $("#send").click(function () {
+        var data = {"code":"cod"};
+        $.ajax({
+
+            url:"/main_interface/interface1",
+            type:"post",
+            datatype:'json',
+            data: {
+                "uname": JSON.stringify($("uname")),
+                "code": JSON.stringify(data)
+            }
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>主界面</title>
+<link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="/static/js/jquery-1.11.3.min.js"></script>
+<!-- Custom Theme files -->
+<link href="/static/css/style_index.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- Custom Theme files -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }</script>
+<meta name="keywords" content="Veuse ui kit Responsive web template, Bootstrap Web Templates, Flat Web Templates, AndriodCompatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<link rel="stylesheet" href="/static/css/flexslider.css" type="text/css" media="screen" />
+<script src="/static/js/login.js"></script>
+<!-- start-smoth-scrolling -->
+	<script type="text/javascript" src="/static/js/move-top.js"></script>
+	<script type="text/javascript" src="/static/js/easing.js"></script>
+		<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					$(".scroll").click(function(event){		
+						event.preventDefault();
+						$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+					});
+				});
+		</script>
+<!-- //end-smoth-scrolling -->
+		<script type="text/javascript" src="/static/js/jquery.jscrollpane.min.js"></script>
+		<script type="text/javascript" id="sourcecode">
+			$(function()
+			{
+				$('.scroll-pane').jScrollPane();
+			});
+		</script>
+
+		<link href="/static/css/form.css" rel="stylesheet" type="text/css" media="all" />
+<!----video -------->	
+		<link href="/static/css/jplayer.blue.monday.min.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="/static/js/jquery.jplayer.min.js"></script>
+			<script type="text/javascript">
+			//<![CDATA[
+			$(document).ready(function(){
+
+				$("#jquery_jplayer_1").jPlayer({
+					ready: function () {
+						$(this).jPlayer("setMedia", {
+							title: "Big Buck Bunny",
+							m4v: "http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v",
+							poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
+						});
+					},
+					swfPath: "../../dist/jplayer",
+					supplied: "m4v",
+					size: {
+						width: "626px",
+						height: "250px",
+						cssClass: "jp-video-360p"
+					},
+					useStateClassSkin: true,
+					autoBlur: false,
+					smoothPlayBar: true,
+					keyEnabled: true,
+					remainingDuration: true,
+					toggleDuration: true
+				});
+			});
+			//]]>
+			</script>
+<!----//video -------->
+<!---- start-audio-plyer-files---->
+		<link rel="stylesheet" href="/static/css/bbplayer.css"/>
+		<script src="/static/js/bbplayer.js"></script>
+<!---- //End-audio-plyer-files---->
+<!----Calender -------->
+		<link rel="stylesheet" href="/static/css/clndr.css" type="text/css" />
+		<script src="/static/js/underscore-min.js"></script>
+		<script src= "/static/js/moment-2.2.1.js"></script>
+		<script src="/static/js/clndr.js"></script>
+		<script src="/static/js/site.js"></script>
+  <!----End Calender -------->
+  <!---starrt-bx-slider---->
+  <!-- bxSlider Javascript file -->
+	    <script src="/static/js/jquery.bxslider.min.js"></script>
+  <!-- bxSlider CSS file -->
+		<link href="/static/css/jquery.bxslider.css" rel="stylesheet" />
+				<script>
+					$(document).ready(function(){
+						  $('.bxslider').bxSlider();
+					});
+				</script>
+   <!---End-bx-slider---->	
+</head>
+<body>
+<!--header start here-->
+<!--logo start-->
+   <div class="header">
+		   <div class="logo">
+				<h1><a href="#">主界面</a></h1>
+		   </div>
+<!--navgation start here-->
+		<div class="head-top" style="width: 2500px">
+		<div class="col-md-7 hd-lft">
+			<div class="top-nav">
+			    <span class="menu"> <img src="/static/images/icon.png" alt=""></span>
+					<ul class="res">
+						<li><a href="#">关于</a></li>
+						<li><a href="#" id="uname_1">个人信息</a></li>
+						<li><a class="active" href="#" id="style_1">服务</a></li>
+						<li><a href="#">兴趣作品</a></li>
+						<li><a href="#" id="Interest_1">作品搜索</a></li>
+						<li><div class="search-in">
+			<div class="search" style="display: none;">
+				<form>
+					<input type="text" class="text">
+					<input type="submit" value="SEARCH">
+				</form>
+				<div class="close-in"><img src="/static/images/close.png" alt=""></div>
+			</div>
+			<div class="right"><button> </button></div>
+		</div>
+			<script type="text/javascript">
+				$('.search').hide();
+				$('button').click(function (){
+				$('.search').show();
+				$('.text').focus();
+				}
+				);
+				$('.close-in').click(function(){
+				$('.search').hide();
+				});
+			</script>	</li>
+                        <script>
+                            $("#uname_1").click(function () {
+                                var username = window.localStorage.getItem("data");
+                                $.ajax({
+                                    url:"/main_interface/interface1",
+                                    type: "get",
+									datatype:'json',
+                                    beforeSend:function(request){
+										request.setRequestHeader("authorization",username);
+									},
+									success:function (data) {
+											if (data.code == 10001){
+												alert("请登录")
+											}else if (data.code==10200){
+                                                window.location.href="/main_interface/information?user_id=%s"%data.data
+                                            }
+									},
+                                    error:function (res) {
+                                        alert(res)
+                                    }
+                                })
+                            });
+
+
+                        </script>
+						<div class="clearfix"></div>
+					</ul>
+						<!-- script-for-menu -->
+									 <script>
+									   $( "span.menu" ).click(function() {
+										 $( "ul.res" ).slideToggle( 300, function() {
+										 // Animation complete.
+										  });
+										 });
+									</script>
+					<!-- /script-for-menu -->
+		
+			</div>
+			<div class="serch2">
+				<input type="text" id="quert" value="Search" onfocus="this.value = '';" onblur="if (this.value == '')
+				{this
+				.value = 'Search';}">
+				<input type="submit" value="" id="search">
+			</div>
+		</div>
+		<div class="col-md-5 hd-rgt">
+
+
+				<div class="clearfix"></div>
+		</div>
+			<div class="clearfix"></div>
+	</div>
+       <script>
+           $("search").click(function () {
+                $.ajax({
+                    url: "/main_interface/search",
+                    typt: "post",
+                    datatype:'json',
+                    data: JSON.stringify($("quert"))
+                })
+           })
+       </script>
+<!--header main start here-->
+		<div class="header-main">
+			<div class="col-md-3 header-left">
+
+				<div class="menu-grid">
+					<ul class="menu_drop">
+						<li class="item1"><a href="#">登录</a>
+							<ul style="display: none;">
+								<li class="subitem1"><a href="http://127.0.0.1:8000/user/index">账户名登录</a></li>
+								<li class="subitem2"><a href="http://127.0.0.1:8000/user/index">第三方登录</a></li>
+
+							</ul>
+						</li>
+						<li class="item2"><a href="#">私密消息</a>
+							<ul style="display: none;">
+								<li class="subitem1"><a href="#">个人消息</a></li>
+								<li class="subitem2"><a href="#"> 官方邮件</a></li>
+								<li class="subitem3"><a href="#">验证码以及活动消息</a></li>
+							</ul>
+						</li>
+						<li class="item3"><a href="#">我发布的</a>
+							<ul style="display: none;">
+								<li class="subitem1"><a href="#">发布消息1 </a></li>
+								<li class="subitem2"><a href="#"> 发布消息2</a></li>
+								<li class="subitem3"><a href="#">发布消息3</a></li>
+                                <li class="subitem3"><a href="#">发布消息4</a></li>
+                                <li class="subitem3"><a href="#">发布消息5</a></li>
+							</ul>
+						</li>
+						<li class="item4"><a href="#">好友列表</a>
+							<ul style="display: none;">
+								<li class="subitem1"><a href="#">好友1 </a></li>
+								<li class="subitem2"><a href="#"> 好友2</a></li>
+								<li class="subitem3"><a href="#">好友3</a></li>
+							</ul>
+						</li>
+						<li class="item5"><a href="#">我收藏的</a>
+							<ul style="display: none;">
+								<li class="subitem1"><a href="#">收藏1 </a></li>
+								<li class="subitem2"><a href="#"> 收藏2</a></li>
+								<li class="subitem3"><a href="#">收藏3</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!-- script for tabs -->
+						<script type="text/javascript">
+							$(function() {
+
+								var menu_ul = $('.menu_drop > li > ul'),
+									   menu_a  = $('.menu_drop > li > a');
+
+								menu_ul.hide();
+
+								menu_a.click(function(e) {
+									e.preventDefault();
+									if(!$(this).hasClass('active')) {
+										menu_a.removeClass('active');
+										menu_ul.filter(':visible').slideUp('normal');
+										$(this).addClass('active').next().stop(true,true).slideDown('normal');
+									} else {
+										$(this).removeClass('active');
+										$(this).next().stop(true,true).slideUp('normal');
+									}
+								});
+
+							});
+						</script>
+						<div class="socialspan_3">
+						    <img class="img-responsive" src="/static/images/men.png" alt="">
+							<h3>本周榜首</h3>
+							<h6>详细信息</h6>
+							<p>本周作品获赞量...收藏量...</p>
+							<div class="soci">
+								<li><a href="#">赞</a></li>
+								<li><a href="#">收藏</a></li>
+							</div>
+						</div>
+						<div class="page-nation">
+							<nav>
+							  <ul class="pagination">
+								<li>
+								  <a href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								  </a>
+								</li>
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li>
+								  <a href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								  </a>
+								</li>
+							  </ul>
+							</nav>
+						</div>
+
+
+	</div>
+			</div>
+		<div class="col-md-9">
+			<div class="col-md-6 header-center">
+				<div class="cat-top">
+					<div class="cat-left">
+					<!-- scrool-pane -->
+							<div class="catagery-slider">
+								<div class="online-head">
+										<h3>选择一个类别</h3>
+								</div>
+									<div class="online-slider">
+											<section class="sky-form">
+												<div class="row row1 scroll-pane jspScrollable" tabindex="0" style="overflow: hidden; padding: 0px; width: 255px;">
+										   <div class="jspContainer" style="width: 255px; height: 300px;"><div class="jspPane" style="padding: 0px; width: 255px; top: 0px;"><div class="sel-catg">
+													<h4><a href="#">城市 </a><span class="selcat-num"> (34) </span></h4>
+												</div><div class="sel-catg">
+													<h4><a href="#">海报</a><span class="selcat-num"> (125) </span></h4>
+												</div><div class="sel-catg">
+													<h4><a href="#">生活</a><span class="selcat-num"> (16) </span></h4>
+												</div><div class="sel-catg">
+													<h4><a href="#">文化</a><span class="selcat-num"> (92) </span></h4>
+												</div>
+                                               <div class="sel-catg">
+													<h4><a href="#">艺术</a><span class="selcat-num"> (48) </span></h4>
+												</div>
+                                                <div class="sel-catg">
+													<h4><a href="#">游戏</a><span class="selcat-num"> (42) </span></h4>
+												</div><div class="sel-catg">
+													<h4><a href="#">娱乐</a><span class="selcat-num">(85)</span></h4>
+												</div>
+                                           </div><div class="jspVerticalBar"><div class="jspCap jspCapTop"></div><div class="jspTrack" style="height: 300px;"><div class="jspDrag" style="height: 137px;"><div class="jspDragTop"></div><div class="jspDragBottom"></div></div></div><div class="jspCap jspCapBottom"></div></div></div></div>
+										 </section>
+									</div>
+							</div>
+						<!-- scrool-pane -->
+					</div>
+					<div class="cat-right">
+
+					<!-- switches -->
+
+					<!-- switches -->
+					<!-- arr -->
+						<div class="arr">
+							<li><a href="#"><i class="ro"></i></a></li>
+						</div>
+					<!-- arr -->
+					</div>
+						<div class="clearfix"></div>
+				</div>
+				<!-- tabs -->
+				<div class="deals">
+                    <img src="/static/images/qwq.jpg" alt="">
+				</div>
+			<!-- tabs -->
+			<div class="tlinks"></div>
+			</div>
+			<div class="col-md-6 header-right">
+
+				<div class="me-rgt">
+					<div class="drop-down">
+				 <ul class="menu">
+					<li class="item1"><a href="#" class="">更多了解<i class="glyphicon glyphicon-menu-down"> </i> </a>
+						<ul class="cute" style="display: none;">
+							<li class="subitem7"><a href="https://www.baidu.com">有疑问？问百度 </a></li>
+							<li class="subitem8"><a href="https://tieba.baidu
+							.com/f?ie=utf-8&kw=%E6%B1%89%E6%9C%8D%E5%90%A7&fr=search">去了解汉服 </a></li>
+							<li class="subitem9"><a href="https://tieba.baidu.com/f?ie=utf-8&kw=%E5%89%91%E7%BD%913">去游戏吧(剑网三) </a></li>
+							<li class="subitem10"><a href="#">画手私人作品展示</a></li>
+						</ul>
+					</li>		
+				</ul>
+				<!--initiate accordion-->
+		<script type="text/javascript">
+			$(function() {
+			    var menu_ul = $('.menu > li > ul'),
+			           menu_a  = $('.menu > li > a');
+			    menu_ul.hide();
+			    menu_a.click(function(e) {
+			        e.preventDefault();
+			        if(!$(this).hasClass('active')) {
+			            menu_a.removeClass('active');
+			            menu_ul.filter(':visible').slideUp('normal');
+			            $(this).addClass('active').next().stop(true,true).slideDown('normal');
+			        } else {
+			            $(this).removeClass('active');
+			            $(this).next().stop(true,true).slideUp('normal');
+			        }
+			    });
+			
+			});
+		</script>
+			</div>
+				</div>
+					<div class="clearfix"></div>
+					<div class="im-a">
+						<img class="img-responsive" src="/static/images/pi6.jpg" alt="">
+					</div>
+					<div class="ban-sl">
+					  <div class="bann-slider">
+						<ul class="rslides callbacks callbacks1" id="slider">
+							<li id="callbacks1_s0" class="" style="display: block; transition: opacity 500ms ease-in-out; -webkit-transition: opacity 500ms ease-in-out; float: none; position: absolute; opacity: 0; z-index: 1;">
+								<div class="slide-text">
+									<p>作品展示</p>
+								</div>
+								<div class="des">
+									<h6 class="av">画手信息</h6>
+									<div class="Cas">
+										<div class="Cas-rgt">
+											<img class="img-responsive" src="/static/images/men.png" alt="">
+										</div>
+										<div class="Cas-lef">
+											<h5>姓名</h5>
+											<p>详细信息：擅长领域：</p>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</li>
+							<li id="callbacks1_s1" class="callbacks1_on" style="display: list-item; transition: opacity 500ms ease-in-out; -webkit-transition: opacity 500ms ease-in-out; float: left; position: relative; opacity: 1; z-index: 2;">
+								<div class="slide-text">
+									<p>作品展示</p>
+								</div>
+								<div class="des">
+									<h6 class="av">画手信息</h6>
+									<div class="Cas">
+										<div class="Cas-rgt">
+											<img class="img-responsive" src="/static/images/men.png" alt="">
+										</div>
+										<div class="Cas-lef">
+											<h5>姓名</h5>
+											<p>详细信息：擅长领域：</p>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							 </li>
+							 <li id="callbacks1_s2" class="" style="display: list-item; transition: opacity 500ms ease-in-out; -webkit-transition: opacity 500ms ease-in-out; float: none; position: absolute; opacity: 0; z-index: 1;">
+								<div class="slide-text">
+									<p>作品展示 </p>
+								</div>
+								<div class="des">
+									<h6 class="av">画手信息</h6>
+									<div class="Cas">
+										<div class="Cas-rgt">
+											<img class="img-responsive" src="/static/images/men.png" alt="">
+										</div>
+										<div class="Cas-lef">
+											<h5>姓名</h5>
+											<p>详细信息：擅长领域：</p>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							 </li>
+						 </ul><a href="#" class="callbacks_nav callbacks1_nav prev">Previous</a><a href="#" class="callbacks_nav callbacks1_nav next">Next</a>
+					  </div>
+					</div>
+				<script src="/static/js/responsiveslides.min.js"></script>
+				<script>
+				    $(function () {
+				      $("#slider").responsiveSlides({
+				      	auto: true,
+				      	speed: 500,
+				        namespace: "callbacks",
+				        pager: false,
+				        nav:true,
+				      });
+				    });
+				  </script>
+					
+			</div>
+				<div class="clearfix"></div>
+				<!-- video -->
+			<div style="height: 400px;width: 550px;border: 5px solid white;color:white">输入框</div>
+			<!-- video -->
+			
+		</div>
+		<div class="clearfix"></div>
+		
+		<!-- middle -->
+		<div style="height: 100px;"></div>
+		<!-- middle -->
+		
+		<!-- chep -->
+
+		<!-- chep -->
+
+</div>		
+<!--header end here-->
+</body>
+</html>

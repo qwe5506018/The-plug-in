@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>登录</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+
+
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+</head>
+<body>
+<div class="main">
+	<div class="w3_login">
+		<div class="w3_login_module">
+			<div class="module form-module">
+				<div class="toggle">
+					<i class="fa fa-times fa-pencil"></i>
+					<div class="tooltip">点击切换</div>
+				</div>
+				<div class="form">
+					<h2>登录账号</h2>
+
+						{% csrf_token %}
+						<input type="text" name="uname" placeholder="用户名" id="uname"/>
+						<input type="password" name="upwd" placeholder="密码" id="upwd"/>
+						<div id="sub" style="width: 320px;background-color: #00dd00;
+						height: 40px;margin: 20px 0;font-size: 20px;
+						font-weight:bold;color: white;cursor:pointer;
+						text-align:center;padding: 0 10px">登录</div>
+
+				</div>
+				<div class="form">
+					<h2>创建一个账号</h2>
+						<input type="text" id="Username" name="Username" placeholder="用户名" />
+						<input type="password" id="Password" name="Password" placeholder="密码" />
+						<input type="email" id="Email" name="Email" placeholder="Email" />
+						<input type="text" id="Phone" name="Phone" placeholder="电话" />
+						<input type="text" id="Code" name="code" placeholder="验证码"
+							   style="width: 220px;display: block;float:
+						left">
+						<div id="send" style="border: 1px solid #000000;
+						background-color: #8a6d3b;height: 37px;
+						cursor:pointer;
+						color: whitesmoke;
+						text-align:center;">发送验证码</div>
+						<div id="send1" style="width: 320px;background-color: #00dd00;
+						height: 40px;margin: 20px 0;font-size: 20px;
+						font-weight:bold;color: white;cursor:pointer;
+						text-align:center;padding: 0 10px">注册</div>
+				</div>
+{#				<div >第三方登录:</div>#}
+{#				<a href="" style="color: #d0e9c6;margin: 80px">微博登录</a>#}
+				<div class="cta" id="Modify"><a href="http://127.0.0.1:8000/user/modify">忘记密码?</a></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+$('.toggle').click(function(){
+	$(this).children('i').toggleClass('fa-pencil');
+	$('.form').animate({height: "toggle",'padding-top': 'toggle','padding-bottom': 'toggle',opacity: "toggle"}, "slow");
+});
+$("#sub").click(function (data) {
+        $.ajax({
+            url:"/ntoken/token_view",
+            type:"post",
+            datatype:'json',
+            data:{
+                "uname": JSON.stringify($("#uname").val()),
+                "upwd": JSON.stringify($("#upwd").val()),
+                contentType: 'application/json',
+			    csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success:function(data){
+                if (data.code == 40200){
+                    alert("用户名或密码错误");
+
+                }else if(data.code == 200){
+                    window.localStorage.setItem("username",data.username);
+                    window.localStorage.setItem("data",data.data.token);
+                    window.location.href="/main_interface/interface"
+                }
+            }
+        })
+
+});
+
+$("#send").click(function () {
+    var data = {"code":"code"};
+	$.ajax({
+		url:"/user/verify",
+		type: "post",
+		datatype:'json',
+		data:{
+            "code":JSON.stringify(data),
+			"Email":JSON.stringify($("#Email").val()),
+			"Username":JSON.stringify($("#Username").val()),
+			"Password":JSON.stringify($("#Password").val()),
+			"Phone":JSON.stringify($("#Phone").val()),
+            contentType: 'application/json',
+			csrfmiddlewaretoken: '{{ csrf_token }}'
+		},
+		success:function (data) {
+			if(data.code == 10200){
+				alert("验证码发送成功")
+			}else if (data.code == 10101){
+				alert("请输入账号")
+			}else if (data.code == 10102){
+				alert("账户已经被注册")
+			}else if (data.code == 20202){
+				alert("请输入密码")
+			}
+
+		},
+		error:function (e) {
+			alert("内部错误，联系管理员")
+		}
+
+	})
+});
+$("#send1").click(function () {
+	$.ajax({
+
+		url:"/user/login",
+		type: "post",
+		datatype:'json',
+		data:{
+			"Username":JSON.stringify($("#Username").val()),
+			"Password":JSON.stringify($("#Password").val()),
+			"Email":JSON.stringify($("#Email").val()),
+			"Phone":JSON.stringify($("#Phone").val()),
+			"Code":JSON.stringify($("#Code").val()),
+			csrfmiddlewaretoken: '{{ csrf_token }}'
+		},
+		success:function (data) {
+
+			if (data.code == 10101){
+				alert("请输入账号")
+			}else if (data.code == 10102){
+				alert("用户名已存在")
+			}else if (data.code == 10103){
+				alert('The username is already registed !')
+			}else if (data.code == 10408){
+				alert("验证码错误")
+			}else if (data.code == 20200){
+				alert("注册成功");
+				window.location.href = "/main_interface/interface"
+			}else if (data.code == 40404){
+				alert("验证码过期,请重新发送验证码")
+			}
+		}
+	})
+});
+
+
+
+
+</script>
+<div style="text-align:center;">
+</div>
+</body>
+</html>

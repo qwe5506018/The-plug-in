@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+<script src="/static/js/wer.js"></script>
+<div class="main">
+	<div class="w3_login">
+		<div class="w3_login_module">
+			<div class="module form-module">
+				<div class="toggle">
+					<i class="fa fa-times fa-pencil"></i>
+				</div>
+				<div class="form">
+					<h2>忘记密码</h2>
+						{% csrf_token %}
+						<input type="text" name="uname" placeholder="用户名" id="uname"/>
+						<input type="password" name="upwd" placeholder="输入需要修改的密码" id="upwd"/>
+                        <input type="password" name="upwd1" placeholder="再次输入密码" id="upwd1"/>
+						<div id="v_container" style="width: 320px;height: 50px;"></div>
+						<input type="text" id="code_input" name="code" placeholder="验证码"
+							   style="width: 220px;display: block;float:
+						left">
+						<div id="my_button" style="border: 1px solid #000000;
+						background-color: #00dd00;height: 37px;
+						cursor:pointer;
+						color: white;
+						font-size: 20px;
+						font-weight:bold;
+						text-align:center;">验证</div>
+
+						<div id="send" style="width: 320px;background-color: #00dd00;
+						height: 40px;margin: 20px 0;font-size: 20px;
+						font-weight:bold;color: white;cursor:pointer;
+						text-align:center;padding: 0 10px">修改密码</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var verifyCode = new GVerify("v_container");
+    document.getElementById("my_button").onclick = function(){
+        var res = verifyCode.validate(document.getElementById("code_input").value);
+        if(res){
+            alert("验证正确");
+        }else{
+            alert("验证码错误");
+        }
+    }
+</script>
+<script>
+    $("#send").click(function () {
+        $.ajax({
+            url: "/user/modify",
+            type: "post",
+            datatype:'json',
+            data: {
+                uname: JSON.stringify($("#uname").val()),
+                upwd: JSON.stringify($("#upwd").val()),
+                upwd1: JSON.stringify($("#upwd1").val()),
+                contentType: 'application/json',
+			    csrfmiddlewaretoken: '{{ csrf_token }}'
+
+            },
+			success:function (data){
+            	if (data.code == 40041){
+            		alert("用户名不存在")
+				}else if (data.code == 40042){
+            		alert("两次密码输入不一致")
+				}else if (data.code == 40020){
+            		alert("修改密码成功返回主界面");
+					window.open("username.html")
+				}
+			}
+        })
+    });
+
+</script>
+</body>
+</html>
